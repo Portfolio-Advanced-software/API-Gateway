@@ -15,12 +15,13 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 		Client: InitServiceClient(c),
 	}
 
-	routes := r.Group("/order")
+	routes := r.Group("/movie")
 	routes.Use(a.AuthRequired)
-	routes.POST("/", svc.CreateOrder)
+	routes.POST("/", svc.CreateMovie)
+	routes.GET("/:id", svc.ReadMovie)
 }
 
-func (svc *ServiceClient) CreateOrder(ctx *gin.Context) {
+func (svc *ServiceClient) CreateMovie(ctx *gin.Context) {
 	routes.CreateMovie(ctx, svc.Client)
 }
 
