@@ -19,6 +19,9 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 	routes.Use(a.AuthRequired)
 	routes.POST("/", svc.CreateMovie)
 	routes.GET("/:id", svc.ReadMovie)
+	routes.PUT("/:id", svc.UpdateMovie)
+	routes.DELETE("/:id", svc.DeleteMovie)
+	routes.GET("/", svc.ListMovies)
 }
 
 func (svc *ServiceClient) CreateMovie(ctx *gin.Context) {
@@ -27,4 +30,16 @@ func (svc *ServiceClient) CreateMovie(ctx *gin.Context) {
 
 func (svc *ServiceClient) ReadMovie(ctx *gin.Context) {
 	routes.ReadMovie(ctx, svc.Client)
+}
+
+func (svc *ServiceClient) UpdateMovie(ctx *gin.Context) {
+	routes.UpdateMovie(ctx, svc.Client)
+}
+
+func (svc *ServiceClient) DeleteMovie(ctx *gin.Context) {
+	routes.DeleteMovie(ctx, svc.Client)
+}
+
+func (svc *ServiceClient) ListMovies(ctx *gin.Context) {
+	routes.ListMovies(ctx, svc.Client)
 }
