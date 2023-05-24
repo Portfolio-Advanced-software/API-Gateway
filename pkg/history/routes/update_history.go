@@ -29,8 +29,8 @@ func UpdateHistory(ctx *gin.Context, c pb.HistoryServiceClient) {
 	updateReq := &pb.UpdateHistoryReq{
 		History: &pb.History{
 			Id:       id,
-			UserId:   body.UserId,
-			MovieId:  body.MovieId,
+			Userid:   body.UserId,
+			Movieid:  body.MovieId,
 			Progress: body.Progress,
 			Like:     body.Like,
 		},

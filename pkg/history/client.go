@@ -20,5 +20,5 @@ func InitServiceClient(c *config.Config) pb.HistoryServiceClient {
 		fmt.Println("Could not connect:", err)
 	}
 
-	return pb.NewUserServiceClient(cc)
+	return pb.NewHistoryServiceClient(cc)
 }

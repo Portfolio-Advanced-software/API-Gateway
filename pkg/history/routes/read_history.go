@@ -19,7 +19,7 @@ func ReadHistory(ctx *gin.Context, c pb.HistoryServiceClient) {
 		return
 	}
 
-	res, err := c.ReadHistory(context.Background(), &pb.ReadMovieReq{
+	res, err := c.ReadHistory(context.Background(), &pb.ReadHistoryReq{
 		Id: objectID.Hex(),
 	})
 

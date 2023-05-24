@@ -11,11 +11,11 @@ import (
 type CreateUserRequestBody struct {
 	Email            string `json:"email"`
 	Phone            string `json:"phone"`
-	DateOfBirth      string `json:"dateofbirth"`
-	FirstName        string `json:"firstname"`
-	LastName         string `json:"lastname"`
-	CreditCardNumber int32  `json:"creditcardnumber"`
-	ExpirationDate   string `json:"expirationdate"`
+	DateOfBirth      string `json:"date_of_birth"`
+	FirstName        string `json:"first_name"`
+	LastName         string `json:"last_name"`
+	CreditCardNumber int32  `json:"credit_card_number"`
+	ExpirationDate   string `json:"expiration_date"`
 	CVC              int32  `json:"cvc"`
 }
 
@@ -31,11 +31,11 @@ func CreateUser(ctx *gin.Context, c pb.UserServiceClient) {
 		User: &pb.User{
 			Email:            body.Email,
 			Phone:            body.Phone,
-			Dateofbirth:      body.DateOfBirth,
-			Firstname:        body.FirstName,
-			Lastname:         body.LastName,
-			Creditcardnumber: body.CreditCardNumber,
-			Expirationdate:   body.ExpirationDate,
+			DateOfBirth:      body.DateOfBirth,
+			FirstName:        body.FirstName,
+			LastName:         body.LastName,
+			CreditCardNumber: body.CreditCardNumber,
+			ExpirationDate:   body.ExpirationDate,
 			Cvc:              body.CVC,
 		},
 	})

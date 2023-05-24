@@ -25,8 +25,8 @@ func CreateHistory(ctx *gin.Context, c pb.HistoryServiceClient) {
 
 	res, err := c.CreateHistory(context.Background(), &pb.CreateHistoryReq{
 		History: &pb.History{
-			UserId:   body.UserId,
-			MovieId:  body.MovieId,
+			Userid:   body.UserId,
+			Movieid:  body.MovieId,
 			Progress: body.Progress,
 			Like:     body.Like,
 		},

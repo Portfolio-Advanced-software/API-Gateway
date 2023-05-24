@@ -3,9 +3,11 @@ package config
 import "github.com/spf13/viper"
 
 type Config struct {
-	Port        string `mapstructure:"PORT"`
-	AuthSvcUrl  string `mapstructure:"AUTH_SVC_URL"`
-	MovieSvcUrl string `mapstructure:"MOVIE_SVC_URL"`
+	Port          string `mapstructure:"PORT"`
+	AuthSvcUrl    string `mapstructure:"AUTH_SVC_URL"`
+	UserSvcUrl    string `mapstructure:"USER_SVC_URL"`
+	MovieSvcUrl   string `mapstructure:"MOVIE_SVC_URL"`
+	HistorySvcUrl string `mapstructure:"HISTORY_SVC_URL"`
 }
 
 func LoadConfig() (c Config, err error) {
