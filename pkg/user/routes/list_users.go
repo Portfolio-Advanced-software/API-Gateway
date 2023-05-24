@@ -9,8 +9,8 @@ import (
 )
 
 func ListUsers(ctx *gin.Context, c pb.UserServiceClient) {
-	// Call the ListMovies RPC
-	res, err := c.ListUsers(context.Background(), &pb.ListMoviesReq{})
+	// Call the ListUsers RPC
+	res, err := c.ListUsers(context.Background(), &pb.ListUsersReq{})
 
 	if err != nil {
 		ctx.AbortWithError(http.StatusBadGateway, err)

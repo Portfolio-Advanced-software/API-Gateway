@@ -8,40 +8,34 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type UpdateHistoryRequestBody struct {
+type CreateHistoryRequestBody struct {
 	UserId   int64  `json:"userid"`
 	MovieId  int64  `json:"movieid"`
 	Progress string `json:"progress"`
 	Like     bool   `json:"like"`
 }
 
-func UpdateHistory(ctx *gin.Context, c pb.HistoryServiceClient) {
-	id := ctx.Param("id")
+func CreateHistory(ctx *gin.Context, c pb.HistoryServiceClient) {
+	body := CreateHistoryRequestBody{}
 
-	// Bind the request body to the UpdateHistoryRequestBody struct
-	body := UpdateHistoryRequestBody{}
 	if err := ctx.BindJSON(&body); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
-	// Create a gRPC request message with the updated History information
-	updateReq := &pb.UpdateHistoryReq{
+	res, err := c.CreateHistory(context.Background(), &pb.CreateHistoryReq{
 		History: &pb.History{
-			Id:       id,
 			UserId:   body.UserId,
 			MovieId:  body.MovieId,
 			Progress: body.Progress,
 			Like:     body.Like,
 		},
-	}
+	})
 
-	// Call the UpdateHistory RPC
-	res, err := c.UpdateHistory(context.Background(), updateReq)
 	if err != nil {
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, res)
+	ctx.JSON(http.StatusCreated, res)
 }

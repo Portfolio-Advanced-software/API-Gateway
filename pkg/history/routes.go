@@ -17,7 +17,7 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 
 	routes := r.Group("/history")
 	routes.Use(a.AuthRequired)
-	routes.PUT("/:userid/:movieid", svc.UpdateUser)
+	routes.PUT("/:id", svc.UpdateHistory)
 }
 
 func (svc *ServiceClient) CreateHistory(ctx *gin.Context) {

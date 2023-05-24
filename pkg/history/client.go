@@ -9,7 +9,7 @@ import (
 )
 
 type ServiceClient struct {
-	Client pb.UserServiceClient
+	Client pb.HistoryServiceClient
 }
 
 func InitServiceClient(c *config.Config) pb.HistoryServiceClient {
