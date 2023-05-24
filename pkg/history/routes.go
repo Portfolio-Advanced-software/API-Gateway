@@ -17,7 +17,11 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 
 	routes := r.Group("/history")
 	routes.Use(a.AuthRequired)
+	routes.POST("/", svc.CreateHistory)
+	routes.GET("/:id", svc.ReadHistory)
 	routes.PUT("/:id", svc.UpdateHistory)
+	routes.DELETE("/:id", svc.DeleteHistory)
+	routes.GET("/", svc.ListHistories)
 }
 
 func (svc *ServiceClient) CreateHistory(ctx *gin.Context) {

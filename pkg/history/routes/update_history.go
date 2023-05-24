@@ -9,8 +9,8 @@ import (
 )
 
 type UpdateHistoryRequestBody struct {
-	UserId   int64  `json:"userid"`
-	MovieId  int64  `json:"movieid"`
+	UserId   string `json:"userid"`
+	MovieId  string `json:"movieid"`
 	Progress string `json:"progress"`
 	Like     bool   `json:"like"`
 }
