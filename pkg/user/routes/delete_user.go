@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func DeleteUser(ctx *gin.Context, c pb.MovieServiceClient) {
+func DeleteUser(ctx *gin.Context, c pb.UserServiceClient) {
 	// Get the object ID from the request parameters or body
 	objectID := ctx.Param("id") // Example: assuming the object ID is part of the URL path
 
