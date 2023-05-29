@@ -9,14 +9,14 @@ import (
 )
 
 func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient) {
-	a := auth.InitAuthMiddleware(authSvc)
+	//a := auth.InitAuthMiddleware(authSvc)
 
 	svc := &ServiceClient{
 		Client: InitServiceClient(c),
 	}
 
 	routes := r.Group("/movie")
-	routes.Use(a.AuthRequired)
+	//routes.Use(a.AuthRequired)
 	routes.POST("/", svc.CreateMovie)
 	routes.GET("/:id", svc.ReadMovie)
 	routes.PUT("/:id", svc.UpdateMovie)
