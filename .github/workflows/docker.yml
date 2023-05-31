@@ -74,7 +74,7 @@ jobs:
 
       - name: Update image in Kubernetes Cluster
         run: |
-          kubectl rollout restart deployment/bingebuster
+          kubectl rollout restart deployment/api-gateway
 
 
 # kubectl set image deployment/bingebuster api-gateway=milofow/bingebuster-gateway:latest
