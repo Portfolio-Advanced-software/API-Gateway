@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package user;
 
-option go_package = "./pkg/user/pb";
+option go_package = "github.com/Portfolio-Advanced-software/BingeBuster-UserService/userpb";
 
 
 service UserService {
@@ -11,6 +11,7 @@ service UserService {
     rpc UpdateUser(UpdateUserReq) returns (UpdateUserRes);
     rpc DeleteUser(DeleteUserReq) returns (DeleteUserRes);
     rpc ListUsers(ListUsersReq) returns (stream ListUsersRes);
+    rpc GetAllUserData(GetAllUserDataReq) returns (GetAllUserDataRes);
 }
 
 
@@ -59,4 +60,12 @@ message ListUsersReq {}
 
 message ListUsersRes {
     User user = 1;
+}
+
+message GetAllUserDataReq {
+    string id = 1;
+}
+
+message GetAllUserDataRes {
+    string data = 1;
 }

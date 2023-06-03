@@ -21,6 +21,7 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 	routes.GET("/:id", svc.ReadUser)
 	routes.PUT("/:id", svc.UpdateUser)
 	routes.DELETE("/:id", svc.DeleteUser)
+	routes.GET("/all/:id", svc.GetAllUsers)
 	routes.GET("/", svc.ListUsers)
 }
 
