@@ -17,15 +17,20 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 		Client: InitServiceClient(c),
 	}
 
-	routes := r.Group("/movie")
-	routes.Use(a.AuthRequired)
-	routes.Use(az.RoleRequired("user"))
+	// Group for routes that require "user" role
+	userRoutes := r.Group("/movie")
+	userRoutes.Use(a.AuthRequired)
+	userRoutes.Use(az.RoleRequired("user"))
+	userRoutes.GET("/:id", svc.ReadMovie)
+	userRoutes.GET("/", svc.ListMovies)
 
-	routes.POST("/", svc.CreateMovie)
-	routes.GET("/:id", svc.ReadMovie)
-	routes.PUT("/:id", svc.UpdateMovie)
-	routes.DELETE("/:id", svc.DeleteMovie)
-	routes.GET("/", svc.ListMovies)
+	// Group for routes that require "admin" role
+	adminRoutes := r.Group("/movie")
+	adminRoutes.Use(a.AuthRequired)
+	adminRoutes.Use(az.RoleRequired("admin"))
+	adminRoutes.POST("/", svc.CreateMovie)
+	adminRoutes.PUT("/:id", svc.UpdateMovie)
+	adminRoutes.DELETE("/:id", svc.DeleteMovie)
 }
 
 func (svc *ServiceClient) CreateMovie(ctx *gin.Context) {

@@ -2,7 +2,6 @@ package authz
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	authzpb "github.com/Portfolio-Advanced-software/API-Gateway/pkg/authz/pb"
@@ -25,17 +24,11 @@ func (c *AuthzMiddlewareConfig) RoleRequired(requiredRole string) gin.HandlerFun
 			return
 		}
 
-		// Debug statement 1
-		fmt.Println("UserID from context:", userID)
-
 		userIDStr, ok := userID.(string)
 		if !ok {
 			ctx.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
-
-		// Debug statement 2
-		fmt.Println("UserID string:", userIDStr)
 
 		res, err := c.svc.Client.VerifyRole(context.Background(), &authzpb.VerifyRoleRequest{
 			UserId: userIDStr,
