@@ -8,6 +8,7 @@ type Config struct {
 	UserSvcUrl    string `mapstructure:"USER_SVC_URL"`
 	MovieSvcUrl   string `mapstructure:"MOVIE_SVC_URL"`
 	HistorySvcUrl string `mapstructure:"HISTORY_SVC_URL"`
+	AuthzSvcUrl   string `mapstructure:"AUTHZ_SVC_URL"`
 }
 
 func LoadConfig() (c Config, err error) {

@@ -4,7 +4,7 @@ package authz;
 
 option go_package = "./pkg/authz/pb";
 
-service AuthService {
+service AuthzService {
     rpc VerifyRole(VerifyRoleRequest) returns (VerifyRoleResponse);
 }
 
