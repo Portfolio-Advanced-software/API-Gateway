@@ -9,7 +9,8 @@ import (
 )
 
 type VerifyRoleRequestBody struct {
-	JwtToken string `json:"jwt_token"`
+	UserId string `json:"user_id"`
+	Role   string `json:"role"`
 }
 
 func VerifyRole(ctx *gin.Context, c pb.AuthzServiceClient) {
@@ -21,7 +22,8 @@ func VerifyRole(ctx *gin.Context, c pb.AuthzServiceClient) {
 	}
 
 	res, err := c.VerifyRole(context.Background(), &pb.VerifyRoleRequest{
-		JwtToken: b.JwtToken,
+		UserId: b.UserId,
+		Role:   b.Role,
 	})
 
 	if err != nil {

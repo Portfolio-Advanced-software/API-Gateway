@@ -19,7 +19,7 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 
 	routes := r.Group("/movie")
 	routes.Use(a.AuthRequired)
-	routes.Use(az.AuthzRequired("user"))
+	routes.Use(az.RoleRequired("user"))
 
 	routes.POST("/", svc.CreateMovie)
 	routes.GET("/:id", svc.ReadMovie)
