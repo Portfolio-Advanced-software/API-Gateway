@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/auth"
+	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/authz"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/config"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/history"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/movie"
@@ -21,7 +22,9 @@ func main() {
 	r := gin.Default()
 
 	authSvc := *auth.RegisterRoutes(r, &c)
-	movie.RegisterRoutes(r, &c, &authSvc)
+	authzSvc := *authz.RegisterRoutes(r, &c)
+
+	movie.RegisterRoutes(r, &c, &authSvc, &authzSvc)
 	user.RegisterRoutes(r, &c, &authSvc)
 	history.RegisterRoutes(r, &c, &authSvc)
 
