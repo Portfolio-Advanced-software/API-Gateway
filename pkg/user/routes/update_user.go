@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/user/pb"
+	userpb "github.com/Portfolio-Advanced-software/API-Gateway/pkg/user/pb"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +19,7 @@ type UpdateUserRequestBody struct {
 	CVC              int32  `json:"cvc"`
 }
 
-func UpdateUser(ctx *gin.Context, c pb.UserServiceClient) {
+func UpdateUser(ctx *gin.Context, c userpb.UserServiceClient) {
 	id := ctx.Param("id")
 
 	// Bind the request body to the UpdateMovieRequestBody struct
@@ -30,8 +30,8 @@ func UpdateUser(ctx *gin.Context, c pb.UserServiceClient) {
 	}
 
 	// Create a gRPC request message with the updated user information
-	updateReq := &pb.UpdateUserReq{
-		User: &pb.User{
+	updateReq := &userpb.UpdateUserReq{
+		User: &userpb.User{
 			Id:               id,
 			Email:            body.Email,
 			Phone:            body.Phone,

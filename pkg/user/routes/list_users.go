@@ -4,13 +4,13 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/user/pb"
+	userpb "github.com/Portfolio-Advanced-software/API-Gateway/pkg/user/pb"
 	"github.com/gin-gonic/gin"
 )
 
-func ListUsers(ctx *gin.Context, c pb.UserServiceClient) {
+func ListUsers(ctx *gin.Context, c userpb.UserServiceClient) {
 	// Call the ListUsers RPC
-	res, err := c.ListUsers(context.Background(), &pb.ListUsersReq{})
+	res, err := c.ListUsers(context.Background(), &userpb.ListUsersReq{})
 
 	if err != nil {
 		ctx.AbortWithError(http.StatusBadGateway, err)

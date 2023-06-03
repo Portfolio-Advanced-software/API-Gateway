@@ -21,7 +21,7 @@ func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient
 	routes.GET("/:id", svc.ReadUser)
 	routes.PUT("/:id", svc.UpdateUser)
 	routes.DELETE("/:id", svc.DeleteUser)
-	routes.GET("/all/:id", svc.GetAllUsers)
+	routes.GET("/all/:id", svc.GetAllUserData)
 	routes.GET("/", svc.ListUsers)
 }
 
@@ -43,4 +43,8 @@ func (svc *ServiceClient) DeleteUser(ctx *gin.Context) {
 
 func (svc *ServiceClient) ListUsers(ctx *gin.Context) {
 	routes.ListUsers(ctx, svc.Client)
+}
+
+func (svc *ServiceClient) GetAllUserData(ctx *gin.Context) {
+	routes.GetAllUserData(ctx, svc.Client)
 }

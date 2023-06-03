@@ -4,12 +4,12 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/user/pb"
+	userpb "github.com/Portfolio-Advanced-software/API-Gateway/pkg/user/pb"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func ReadUser(ctx *gin.Context, c pb.UserServiceClient) {
+func ReadUser(ctx *gin.Context, c userpb.UserServiceClient) {
 	id := ctx.Param("id")
 
 	// Convert string ID to ObjectID
@@ -19,7 +19,7 @@ func ReadUser(ctx *gin.Context, c pb.UserServiceClient) {
 		return
 	}
 
-	res, err := c.ReadUser(context.Background(), &pb.ReadUserReq{
+	res, err := c.ReadUser(context.Background(), &userpb.ReadUserReq{
 		Id: objectID.Hex(),
 	})
 

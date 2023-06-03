@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/user/pb"
+	userpb "github.com/Portfolio-Advanced-software/API-Gateway/pkg/user/pb"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,7 +19,7 @@ type CreateUserRequestBody struct {
 	CVC              int32  `json:"cvc"`
 }
 
-func CreateUser(ctx *gin.Context, c pb.UserServiceClient) {
+func CreateUser(ctx *gin.Context, c userpb.UserServiceClient) {
 	body := CreateUserRequestBody{}
 
 	if err := ctx.BindJSON(&body); err != nil {
@@ -27,8 +27,8 @@ func CreateUser(ctx *gin.Context, c pb.UserServiceClient) {
 		return
 	}
 
-	res, err := c.CreateUser(context.Background(), &pb.CreateUserReq{
-		User: &pb.User{
+	res, err := c.CreateUser(context.Background(), &userpb.CreateUserReq{
+		User: &userpb.User{
 			Email:            body.Email,
 			Phone:            body.Phone,
 			DateOfBirth:      body.DateOfBirth,
