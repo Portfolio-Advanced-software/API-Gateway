@@ -31,5 +31,10 @@ func Login(ctx *gin.Context, c pb.AuthServiceClient) {
 		return
 	}
 
+	if res.Status != 200 {
+		ctx.JSON(http.StatusNotFound, &res)
+		return
+	}
+
 	ctx.JSON(http.StatusCreated, &res)
 }

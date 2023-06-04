@@ -213,7 +213,7 @@ func TestLogin(t *testing.T) {
 		router.ServeHTTP(res, req)
 
 		// Assert that the response has the expected status code
-		assert.Equal(t, http.StatusOK, res.Code)
+		assert.Equal(t, http.StatusCreated, res.Code)
 	})
 
 	t.Run("invalid login", func(t *testing.T) {
