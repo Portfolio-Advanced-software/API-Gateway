@@ -9,14 +9,14 @@ import (
 )
 
 func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient) {
-	a := auth.InitAuthMiddleware(authSvc)
+	//a := auth.InitAuthMiddleware(authSvc)
 
 	svc := &ServiceClient{
 		Client: InitServiceClient(c),
 	}
 
 	routes := r.Group("/history")
-	routes.Use(a.AuthRequired)
+	//routes.Use(a.AuthRequired)
 	routes.POST("/", svc.CreateHistory)
 	routes.GET("/:id", svc.ReadHistory)
 	routes.PUT("/:id", svc.UpdateHistory)
