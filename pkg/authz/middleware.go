@@ -2,9 +2,7 @@ package authz
 
 import (
 	"context"
-	"fmt"
 	"net/http"
-	"strconv"
 
 	authzpb "github.com/Portfolio-Advanced-software/API-Gateway/pkg/authz/pb"
 	"github.com/gin-gonic/gin"
@@ -38,7 +36,6 @@ func (c *AuthzMiddlewareConfig) RoleRequired(requiredRole string) gin.HandlerFun
 		})
 
 		if err != nil || !res.IsAuthorized {
-			fmt.Printf("authorized: " + strconv.FormatBool(res.IsAuthorized) + "and err = " + err.Error())
 			ctx.AbortWithStatus(http.StatusForbidden)
 			return
 		}
