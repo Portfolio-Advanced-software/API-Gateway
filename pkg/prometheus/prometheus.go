@@ -8,5 +8,5 @@ import (
 
 func Metrics() {
 	http.Handle("/metrics", promhttp.Handler())
-	http.ListenAndServe(":2112a", nil)
+	http.ListenAndServe(":2112", nil)
 }
