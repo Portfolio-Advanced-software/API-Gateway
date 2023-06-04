@@ -8,7 +8,7 @@ import (
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/config"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/history"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/movie"
-	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/prometheus"
+	promotheus "github.com/Portfolio-Advanced-software/API-Gateway/pkg/prometheus"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/user"
 	"github.com/gin-gonic/gin"
 )
@@ -28,8 +28,8 @@ func main() {
 	movie.RegisterRoutes(r, &c, &authSvc, &authzSvc)
 	user.RegisterRoutes(r, &c, &authSvc)
 	history.RegisterRoutes(r, &c, &authSvc)
+	promotheus.RegisterRoutes(r, &c)
 
 	r.Run(c.Port)
 
-	go prometheus.Metrics()
 }
