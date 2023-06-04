@@ -8,6 +8,7 @@ import (
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/config"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/history"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/movie"
+	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/prometheus"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/user"
 	"github.com/gin-gonic/gin"
 )
@@ -29,4 +30,6 @@ func main() {
 	history.RegisterRoutes(r, &c, &authSvc)
 
 	r.Run(c.Port)
+
+	go prometheus.Metrics()
 }
