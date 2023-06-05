@@ -25,9 +25,16 @@ func main() {
 	authSvc := *auth.RegisterRoutes(r, &c)
 	authzSvc := *authz.RegisterRoutes(r, &c)
 
-	movie.RegisterRoutes(r, &c, &authSvc, &authzSvc)
+	movieSvc := movie.ServiceClient{
+		Client: movie.InitServiceClient(&c),
+	}
+	historySvc := history.ServiceClient{
+		Client: history.InitServiceClient(&c),
+	}
+
+	movie.RegisterRoutes(r, &c, &authSvc, &authzSvc, &movieSvc)
 	user.RegisterRoutes(r, &c, &authSvc)
-	history.RegisterRoutes(r, &c, &authSvc)
+	history.RegisterRoutes(r, &c, &authSvc, &authzSvc, &historySvc)
 	promotheus.RegisterRoutes(r, &c)
 
 	r.Run(c.Port)

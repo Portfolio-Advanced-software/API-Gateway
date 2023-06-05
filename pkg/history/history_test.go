@@ -1,80 +1,62 @@
-package history_test
+package history
 
-// import (
-// 	"net/http"
-// 	"net/http/httptest"
-// 	"testing"
+import (
+	"net/http"
+	"net/http/httptest"
+	"testing"
 
-// 	"github.com/gin-gonic/gin"
-// 	"github.com/stretchr/testify/assert"
-// 	"google.golang.org/grpc"
+	"github.com/gin-gonic/gin"
+)
 
-// 	authpb "github.com/Portfolio-Advanced-software/API-Gateway/pkg/auth/pb"
-// 	amock "github.com/Portfolio-Advanced-software/API-Gateway/pkg/auth/pb/mock"
-// 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/config"
-// 	historypb "github.com/Portfolio-Advanced-software/API-Gateway/pkg/history/pb"
-// 	hmock "github.com/Portfolio-Advanced-software/API-Gateway/pkg/history/pb/mock"
-// )
+func TestCreateHistoryWithoutToken(t *testing.T) {
+	// Create a new Gin router
+	router := gin.Default()
 
-// func TestGetHistory(t *testing.T) {
-// 	// Create a new Gin router
-// 	router := gin.Default()
+	// Register the routes
+	RegisterRoutes(router, nil, nil) // Pass nil as the authSvc since we're testing without token
 
-// 	// Create a new config
-// 	c := config.Config{
-// 		Port: "8080", // Set the desired port
-// 	}
+	// Create an HTTP request to the CreateHistory endpoint
+	req, err := http.NewRequest(http.MethodPost, "/history/", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-// 	// Create an instance of the AuthServiceServerMock
-// 	authServer := amock.MockAuthServiceServer{}
-// 	// Create an instance of the HistoryServiceServerMock
-// 	historyServer := hmock.MockHistoryServiceServer{}
+	// Create an HTTP test recorder to capture the response
+	recorder := httptest.NewRecorder()
 
-// 	// Register the AuthServiceServerMock as the gRPC server implementation
-// 	authpb.RegisterAuthServiceServer(historyServer, authServer)
+	// Serve the request using the router
+	router.ServeHTTP(recorder, req)
 
-// 	// Register the HistoryServiceServerMock as the gRPC server implementation
-// 	historypb.RegisterHistoryServiceServer(historyServer, historyServer)
+	// Assert that the response code is 401 Unauthorized
+	if recorder.Code != http.StatusUnauthorized {
+		t.Errorf("Expected status code %d but got %d", http.StatusUnauthorized, recorder.Code)
+	}
+}
 
-// 	// Start the test gRPC server
-// 	testServer := grpc.NewServer()
-// 	defer testServer.Stop()
+func TestCreateHistoryWithToken(t *testing.T) {
+	// Create a new Gin router
+	router := gin.Default()
 
-// 	// Register the mock gRPC servers with the test gRPC server
-// 	authpb.RegisterAuthServiceServer(testServer, authServer)
-// 	historypb.RegisterHistoryServiceServer(testServer, historyServer)
+	// Register the routes
+	RegisterRoutes(router, nil, nil) // Pass nil as the authSvc since we're testing without token
 
-// 	// Start the test server in a separate goroutine
-// 	go func() {
-// 		if err := router.Run(c.Port); err != nil {
-// 			t.Fatalf("failed to start test server: %v", err)
-// 		}
-// 	}()
+	// Create an HTTP request to the CreateHistory endpoint
+	req, err := http.NewRequest(http.MethodPost, "/history/", nil)
+	if err != nil {
+		t.Fatal(err)
+	}
 
-// 	// Create a new gRPC connection to the test server
-// 	conn, err := grpc.Dial("localhost"+c.Port, grpc.WithInsecure())
-// 	if err != nil {
-// 		t.Fatalf("failed to connect to test server: %v", err)
-// 	}
-// 	defer conn.Close()
+	// Set the JWT token in the request headers
+	req.Header.Set("Authorization", "Bearer your-jwt-token")
 
-// 	// Create an instance of the AuthServiceClient using the test server connection
-// 	authClient := authpb.NewAuthServiceClient(conn)
+	// Create an HTTP test recorder to capture the response
+	recorder := httptest.NewRecorder()
 
-// 	// Create a new HTTP request to the test server
-// 	req, err := http.NewRequest("GET", "/history", nil)
-// 	if err != nil {
-// 		t.Fatalf("failed to create HTTP request: %v", err)
-// 	}
+	// Serve the request using the router
+	router.ServeHTTP(recorder, req)
 
-// 	// Set any required headers or parameters for the request
-
-// 	// Perform the HTTP request
-// 	resp := httptest.NewRecorder()
-// 	router.ServeHTTP(resp, req)
-
-// 	// Assert the response status code and any other expected values
-
-// 	assert.Equal(t, http.StatusOK, resp.Code, "unexpected status code")
-// 	// Assert other response properties or content
-// }
+	// Assert that the response code is not 401 Unauthorized
+	if recorder.Code == http.StatusUnauthorized {
+		t.Errorf("Expected a response other than %d", http.StatusUnauthorized)
+	}
+}

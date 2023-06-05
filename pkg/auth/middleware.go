@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -42,6 +43,6 @@ func (c *AuthMiddlewareConfig) AuthRequired(ctx *gin.Context) {
 	}
 
 	ctx.Set("userId", res.UserId)
-
+	fmt.Println("end of auth")
 	ctx.Next()
 }

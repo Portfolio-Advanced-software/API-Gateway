@@ -2,6 +2,7 @@ package routes
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/movie/pb"
@@ -18,12 +19,13 @@ func ReadMovie(ctx *gin.Context, c pb.MovieServiceClient) {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
-
+	fmt.Println(objectID)
 	res, err := c.ReadMovie(context.Background(), &pb.ReadMovieReq{
 		Id: objectID.Hex(),
 	})
 
 	if err != nil {
+		fmt.Println("here")
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}

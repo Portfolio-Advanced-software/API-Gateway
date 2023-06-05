@@ -11,7 +11,6 @@ import (
 
 func ReadHistory(ctx *gin.Context, c pb.HistoryServiceClient) {
 	id := ctx.Param("id")
-
 	// Convert string ID to ObjectID
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
@@ -24,6 +23,7 @@ func ReadHistory(ctx *gin.Context, c pb.HistoryServiceClient) {
 	})
 
 	if err != nil {
+
 		ctx.AbortWithError(http.StatusBadGateway, err)
 		return
 	}

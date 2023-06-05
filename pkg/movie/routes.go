@@ -9,20 +9,19 @@ import (
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/movie/routes"
 )
 
-func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient, authzSvc *authz.ServiceClient) {
+func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient, authzSvc *authz.ServiceClient, svc *ServiceClient) {
 	a := auth.InitAuthMiddleware(authSvc)
 	az := authz.InitAuthzMiddleware(authzSvc)
 
-	svc := &ServiceClient{
-		Client: InitServiceClient(c),
-	}
+	// svc := &ServiceClient{
+	// 	Client: InitServiceClient(c),
+	// }
 
 	// Group for routes that require "user" role
-	userRoutes := r.Group("/movie")
-	userRoutes.Use(a.AuthRequired)
-	userRoutes.Use(az.RoleRequired("user"))
-	userRoutes.GET("/:id", svc.ReadMovie)
-	userRoutes.GET("/", svc.ListMovies)
+	routes := r.Group("/movie")
+	routes.Use(a.AuthRequired)
+	routes.GET("/:id", svc.ReadMovie)
+	routes.GET("/", svc.ListMovies)
 
 	// Group for routes that require "admin" role
 	adminRoutes := r.Group("/movie")

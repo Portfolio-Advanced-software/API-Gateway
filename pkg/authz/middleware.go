@@ -2,6 +2,7 @@ package authz
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	authzpb "github.com/Portfolio-Advanced-software/API-Gateway/pkg/authz/pb"
@@ -18,6 +19,7 @@ func InitAuthzMiddleware(svc *ServiceClient) AuthzMiddlewareConfig {
 
 func (c *AuthzMiddlewareConfig) RoleRequired(requiredRole string) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		fmt.Println("beginning of authz")
 		userID, exists := ctx.Get("userId")
 		if !exists {
 			ctx.AbortWithStatus(http.StatusUnauthorized)

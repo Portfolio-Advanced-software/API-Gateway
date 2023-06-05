@@ -1,27 +1,35 @@
 package history
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/auth"
+	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/authz"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/config"
 	"github.com/Portfolio-Advanced-software/API-Gateway/pkg/history/routes"
 )
 
-func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient) {
-	//a := auth.InitAuthMiddleware(authSvc)
+func RegisterRoutes(r *gin.Engine, c *config.Config, authSvc *auth.ServiceClient, authzSvc *authz.ServiceClient, svc *ServiceClient) {
+	a := auth.InitAuthMiddleware(authSvc)
+	az := authz.InitAuthzMiddleware(authzSvc)
 
-	svc := &ServiceClient{
-		Client: InitServiceClient(c),
-	}
+	// svc := &ServiceClient{
+	// 	Client: InitServiceClient(c),
+	// }
 
 	routes := r.Group("/history")
-	//routes.Use(a.AuthRequired)
+	routes.Use(a.AuthRequired)
 	routes.POST("/", svc.CreateHistory)
-	routes.GET("/:id", svc.ReadHistory)
 	routes.PUT("/:id", svc.UpdateHistory)
 	routes.DELETE("/:id", svc.DeleteHistory)
-	routes.GET("/", svc.ListHistories)
+
+	adminRoutes := r.Group("/history")
+	adminRoutes.Use(a.AuthRequired)
+	adminRoutes.Use(az.RoleRequired("admin"))
+	adminRoutes.GET("/", svc.ListHistories)
+	adminRoutes.GET("/:id", svc.ReadHistory)
 }
 
 func (svc *ServiceClient) CreateHistory(ctx *gin.Context) {
@@ -29,6 +37,7 @@ func (svc *ServiceClient) CreateHistory(ctx *gin.Context) {
 }
 
 func (svc *ServiceClient) ReadHistory(ctx *gin.Context) {
+	fmt.Println("Handling ReadHistory request")
 	routes.ReadHistory(ctx, svc.Client)
 }
 
