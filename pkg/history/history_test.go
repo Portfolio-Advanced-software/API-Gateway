@@ -13,7 +13,7 @@ func TestCreateHistoryWithoutToken(t *testing.T) {
 	router := gin.Default()
 
 	// Register the routes
-	RegisterRoutes(router, nil, nil) // Pass nil as the authSvc since we're testing without token
+	RegisterRoutes(router, nil, nil, nil, nil) // Pass nil as the authSvc since we're testing without token
 
 	// Create an HTTP request to the CreateHistory endpoint
 	req, err := http.NewRequest(http.MethodPost, "/history/", nil)
@@ -38,7 +38,7 @@ func TestCreateHistoryWithToken(t *testing.T) {
 	router := gin.Default()
 
 	// Register the routes
-	RegisterRoutes(router, nil, nil) // Pass nil as the authSvc since we're testing without token
+	RegisterRoutes(router, nil, nil, nil, nil) // Pass nil as the authSvc since we're testing without token
 
 	// Create an HTTP request to the CreateHistory endpoint
 	req, err := http.NewRequest(http.MethodPost, "/history/", nil)
